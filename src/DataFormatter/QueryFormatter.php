@@ -44,7 +44,11 @@ class QueryFormatter extends DataFormatter
     public function escapeBindings($bindings)
     {
         foreach ($bindings as &$binding) {
-            $binding = htmlentities($binding, ENT_QUOTES, 'UTF-8', false);
+            if (is_string($binding)) {
+                $binding = htmlentities($binding, ENT_QUOTES, 'UTF-8', false);
+            } else {
+                $binding = json_encode($binding);
+            }
         }
 
         return $bindings;
